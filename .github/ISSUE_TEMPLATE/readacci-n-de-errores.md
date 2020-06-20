@@ -11,8 +11,6 @@ assignees: konami12
 
 Describir el error, indicar donde sucede y como impacta
 
----
-
 ### 🚶🏻‍♂️ PASOS PARA REPRODUCIR EL ERROR:
 
 Ir a: URL DONDE ESTA EL ERROR

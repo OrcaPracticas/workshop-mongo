@@ -11,11 +11,7 @@ assignees: konami12
 
 Como **[ROL]** quiero [FUNCIONALIDAD] para [OBJETIVO]
 
----
-
-### 👍 CRITERIOS DE ACEPTACIÓN
-
----
+## ✅ CRITERIOS DE ACEPTACIÓN
 
 #### Nombre del criterio
 
