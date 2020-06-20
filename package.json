@@ -1,0 +1,22 @@
+{
+    "name": "workshop-mongo",
+    "version": "1.0.0",
+    "description": "Taller del uso de mongo desde nodeJS",
+    "main": "./run_app.js",
+    "scripts": {
+        "dev": "nodemon ./run_app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@GitHub:OrcaPracticas/workshop-mongo.git"
+    },
+    "keywords": [
+        "Mongo",
+        "NodeJs",
+        "JavaScript",
+        "Mongoose",
+        "noSql"
+    ],
+    "author": "Jorge Mendez Ortega <jorge.mendez.ortega@gmail.com>",
+    "license": "MIT"
+}
