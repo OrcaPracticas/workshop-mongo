@@ -4,7 +4,7 @@
     "description": "Taller del uso de mongo desde nodeJS",
     "main": "./run_app.js",
     "scripts": {
-        "dev": "nodemon ./run_app.js"
+        "dev": "nodemon ./"
     },
     "repository": {
         "type": "git",
@@ -31,11 +31,19 @@
         "@babel/cli": "7.10.3",
         "@babel/core": "7.10.3",
         "@babel/node": "7.10.3",
+        "babel-eslint": "10.1.0",
         "@babel/preset-env": "7.10.3",
         "@babel/register": "7.10.3",
         "babel-plugin-inline-json-import": "0.3.2",
         "babel-plugin-module-resolver": "4.0.0",
         "babel-plugin-transform-define": "2.0.0",
+        "eslint": "7.2.0",
+        "eslint-config-airbnb": "18.1.0",
+        "eslint-config-prettier": "6.11.0",
+        "eslint-plugin-import": "2.21.2",
+        "eslint-plugin-jsx-a11y": "6.2.3",
+        "eslint-plugin-prettier": "3.1.4",
+        "prettier": "2.0.5",
         "nodemon": "2.0.4"
     }
 }
