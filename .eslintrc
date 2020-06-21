@@ -1,0 +1,20 @@
+{
+    "extends": [
+        "airbnb",
+        "prettier"
+    ],
+    "parser": "babel-eslint",
+    "plugins": [
+        "prettier",
+        "module-resolver"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "module-resolver/use-alias": 2
+    },
+    "settings": {
+        "import/resolver": {
+            "babel-module": {}
+        }
+    }
+}
