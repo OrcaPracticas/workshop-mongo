@@ -4,6 +4,7 @@ module.exports = {
     presets: ["@babel/preset-env"],
     plugins: [
         "inline-json-import",
+        "@babel/plugin-proposal-class-properties",
         [
             "module-resolver",
             {
