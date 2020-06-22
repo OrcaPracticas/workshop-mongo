@@ -24,7 +24,10 @@ const SCHEMA = new Schema({
     },
     types: [String],
     weight: { type: String, default: "0 lbs (0 kg)" },
-    img: { type: String, default: "https://pbs.twimg.com/profile_images/1155697750664609802/ClNE-F8S_400x400.jpg" },
+    img: {
+        type: String,
+        default: "https://pbs.twimg.com/profile_images/1155697750664609802/ClNE-F8S_400x400.jpg",
+    },
 });
 
 // Se indica el nombre de la colección y esquema a utillizar

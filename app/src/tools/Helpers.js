@@ -1,5 +1,6 @@
 import Colors from "cli-color";
 
+/* eslint-disable class-methods-use-this */
 class Helper {
     // Propiedad privada
     static #instanceClass = null;
@@ -30,10 +31,13 @@ class Helper {
 
         for (let i = 0; i < STRING.length; i += 1) {
             char = STRING[i];
-            char = (typeof SPECIAL[char] !== "undefined") ? SPECIAL[char] : char;
+            char = typeof SPECIAL[char] !== "undefined" ? SPECIAL[char] : char;
             if (typeof char !== "function") {
                 ascii = char.charCodeAt();
-                newString += (ascii === 32 || (ascii >= 48 && ascii <= 57) || (ascii >= 97 && ascii <= 122)) ? char : "";
+                newString +=
+                    ascii === 32 || (ascii >= 48 && ascii <= 57) || (ascii >= 97 && ascii <= 122)
+                        ? char
+                        : "";
             }
         }
         newString = newString.split(" ").filter(Boolean);
@@ -74,31 +78,33 @@ class Helper {
         let log = "";
         let msg = "";
         let auxText = typeof text === "object" ? JSON.stringify(text) : text;
-        const lon = (auxText.length < 90) ? (100 - auxText.length) : 0;
+        const lon = auxText.length < 90 ? 100 - auxText.length : 0;
         switch (type) {
-        case "e":
-            log = Colors.xterm(15).bgXterm(124).bold;
-            msg = " 🚨  ERROR    ";
-            break;
-        case "s":
-            log = Colors.xterm(15).bgXterm(34).bold;
-            msg = " 🙌  SUCCESS  ";
-            break;
-        case "w":
-            log = Colors.xterm(232).bgXterm(214).bold;
-            msg = " ⚠️  WARNING  ";
-            break;
-        case "t":
-            log = Colors.xterm(15).bgXterm(90).bold;
-            msg = " 🔎  TRACKING ";
-            break;
-        default:
-            log = Colors.xterm(15).bgXterm(12).bold;
-            msg = " ℹ️  INFO     ";
-            break;
+            case "e":
+                log = Colors.xterm(15).bgXterm(124).bold;
+                msg = " 🚨  ERROR    ";
+                break;
+            case "s":
+                log = Colors.xterm(15).bgXterm(34).bold;
+                msg = " 🙌  SUCCESS  ";
+                break;
+            case "w":
+                log = Colors.xterm(232).bgXterm(214).bold;
+                msg = " ⚠️  WARNING  ";
+                break;
+            case "t":
+                log = Colors.xterm(15).bgXterm(90).bold;
+                msg = " 🔎  TRACKING ";
+                break;
+            default:
+                log = Colors.xterm(15).bgXterm(12).bold;
+                msg = " ℹ️  INFO     ";
+                break;
         }
-        for (let i = 0; i < lon; i += 1) { auxText += " "; }
-        console.log(log(` [${msg}] => ${auxText}`));
+        for (let i = 0; i < lon; i += 1) {
+            auxText += " ";
+        }
+        console.log(log(` [${msg}] => ${auxText}`)); // eslint-disable-line
     }
 
     /**
@@ -113,5 +119,6 @@ class Helper {
         return Helper.#instanceClass;
     }
 }
+/* eslint-enable class-methods-use-this */
 
 export default Helper;
