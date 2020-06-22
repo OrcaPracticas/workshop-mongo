@@ -1,8 +1,9 @@
+import BodyParser from "body-parser";
 import Compression from "compression";
 import Cors from "cors";
 import Express, { Router, static as Statics } from "express";
-import BodyParser from "body-parser";
 import Helmet, { frameguard } from "helmet";
+import Mongoose from "mongoose";
 import Path from "path";
 
 import ApiRouter from "./router";
@@ -43,20 +44,36 @@ Server.use(ApiRouter(Router));
 // ====================== ESTABLECIENDO CONEXIÓN ====================== //
 
 /**
- * Inicializacion del servidor.
- *
- * @param {Number} PORT Puerto por el que estara escuhcando el server.
- * @param {Function} Callback Permite identificar el estado del proceso.
- *
- * return void.
+ * Conexión a MongoDB Atlas.
  */
-Server.listen(APP_PORT, (error) => {
-    Helpers.messages("Iniciando el Servidor", "i");
-    if (error) {
-        Helpers.messages("Problemas al inicar el servidor", "e");
-        console.log(error); // eslint-disable-line
-        process.exit(1);
-    } else {
-        Helpers.messages(`🚀 Servidor listo  en el puerto ${APP_PORT}`, "s");
+Mongoose.connect(
+    process.env.ODBC,
+    process.env.CONFIG,
+    (mongoError) => {
+        if (mongoError) {
+            Helpers.messages("Problemas de conexión a MongoDB Atlas", "e");
+            console.log(mongoError);
+            process.exit(1);
+        }
+        /**
+         * Inicializacion del servidor.
+         *
+         * @param {Number} PORT Puerto por el que estara escuhcando el server.
+         * @param {Function} Callback Permite identificar el estado del proceso.
+         *
+         * return void.
+         */
+        Server.listen(APP_PORT, (error) => {
+            Helpers.messages("Iniciando el Servidor", "i");
+            Helpers.messages("🛰  Conexión establecida con MongoDB Altas", "s");
+            if (error) {
+                Helpers.messages("Problemas al inicar el servidor", "e");
+                console.log(error); // eslint-disable-line
+                process.exit(1);
+            } else {
+                Helpers.messages(`🚀 Servidor listo  en el puerto ${APP_PORT}`, "s");
+            }
+        });
     }
-});
+);
+
