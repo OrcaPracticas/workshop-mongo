@@ -1,2 +1,2 @@
-export { default as Pokemon } from "./pokemon";
-export { default as User } from "./user";
+export { default as pokemon } from "./pokemon";
+export { default as user } from "./user";
