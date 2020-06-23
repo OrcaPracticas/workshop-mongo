@@ -33,11 +33,20 @@ const ApiRouter = (router) => {
         CONTROLLER.read({ body, Model, response });
     });
 
+    // Router para actualizar un registro
+    Router.put("/:Model/:_id?", async (request, response) => {
+        const {
+            body = null,
+            params: { Model = "", _id = "" },
+        } = request;
+        CONTROLLER.update({ body, query: { _id }, Model, response });
+    });
+
     // Router para borrar un registro
-    Router.delete("/:Model/:id?", async (request, response) => {
-        const { Model = "", id = "" } = request.params;
+    Router.delete("/:Model/:_id?", async (request, response) => {
+        const { Model = "", _id = "" } = request.params;
         CONTROLLER.delete({
-            body: { _id: id },
+            body: { _id },
             Model,
             response,
         });

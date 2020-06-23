@@ -64,6 +64,10 @@ class General {
     async update(setting) {
         const IS_LOAD = await this.#load(setting);
         if (IS_LOAD) {
+            const { body, query, Model } = this.#config;
+            Model.updateMany(query, body, (error, data) => {
+                this.#send(error, data, 202, "UPDATE");
+            });
         }
     }
 
@@ -79,7 +83,7 @@ class General {
         if (IS_LOAD) {
             const { body, Model } = this.#config;
             Model.deleteMany(body, (error, data) => {
-                this.#send(error, data, 200, "delete");
+                this.#send(error, data, 204, "delete");
             });
         }
     }
