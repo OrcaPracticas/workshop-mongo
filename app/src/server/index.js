@@ -8,6 +8,7 @@ import Path from "path";
 
 import Tools from "Tools/Helpers";
 import ApiRouter from "./router";
+
 // ======================== CONSTANTES ======================== //
 
 const APP_PORT = process.env.PORT;
@@ -42,7 +43,27 @@ Server.use(
 
 // ===================== MANEJO DE RUTAS ====================== //
 
+// Router para indicar que ruta se esta solicitandp
+Server.all("*", (request, response, next) => {
+    const { path = "/" } = request;
+    Helpers.messages(`Solicitando ${path}`, "i");
+    next();
+});
+
+// Router correspondiente las acciones del api
 Server.use(ApiRouter(Router));
+
+// Router por defecto.
+Server.use("/", (request, response) => {
+    const { path = "" } = request;
+    if (path === "/") {
+        Helpers.messages("Solicitud recibida", "s");
+        response.status(200);
+        response.send("<h1>API</h1>");
+    } else {
+        Helpers.error(response, `Ruta no encontrada ${path}`, "Not found");
+    }
+});
 
 // ====================== ESTABLECIENDO CONEXIÓN ====================== //
 

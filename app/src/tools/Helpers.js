@@ -6,6 +6,26 @@ class Helper {
     static #instanceClass = null;
 
     /**
+     * Permite manejar el error 404
+     *
+     * @param {express} response Objeto de express
+     * @param {string} message Mensaje a mostrar
+     * @param {any} error error que surge al mandar la data.
+     *
+     * @return {void}
+     */
+    error(response, message, error = "") {
+        const DATA = {
+            error,
+            success: false,
+            message,
+        };
+        this.messages(message, "e");
+        response.status(404);
+        response.json(DATA);
+    }
+
+    /**
      * Permite limpiar y formatear una cadena
      *
      * @param {string} string Cadena a limpiar.
