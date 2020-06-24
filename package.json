@@ -4,7 +4,8 @@
     "description": "Taller del uso de mongo desde nodeJS",
     "main": "./run_app.js",
     "scripts": {
-        "dev": "nodemon ./"
+        "dev": "nodemon ./",
+        "start": "node ./"
     },
     "repository": {
         "type": "git",
