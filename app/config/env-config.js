@@ -5,7 +5,7 @@ const HOST = HEROKU || `http://localhost:${APP_PORT}`;
 
 // variables de entorno
 module.exports = {
-    "process.env.PORT": APP_PORT,
+    "process.env.PORT9": APP_PORT,
     "process.env.ODBC": `mongodb+srv://${USER_DB}:${PASS}@cluster0-eke4y.mongodb.net/${DB}?retryWrites=true&w=majority`,
     "process.env.HOST": HOST,
     "process.env.CONFIG": {
