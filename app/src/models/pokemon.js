@@ -26,7 +26,7 @@ const SCHEMA = new Schema({
     weight: { type: String, default: "0 lbs (0 kg)" },
     img: {
         type: String,
-        default: "https://pbs.twimg.com/profile_images/1155697750664609802/ClNE-F8S_400x400.jpg",
+        default: "",
     },
 });
 
