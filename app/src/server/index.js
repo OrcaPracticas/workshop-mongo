@@ -8,9 +8,10 @@ import Path from "path";
 
 import Tools from "Tools/Helpers";
 import ApiRouter from "./router";
+
 // ======================== CONSTANTES ======================== //
 
-const APP_PORT = process.env.PORT;
+const PORT = process.env.APP_PORT;
 const ROOT_PATH = Path.join(__dirname, "../../");
 const Helpers = Tools.instance;
 const Server = Express();
@@ -42,7 +43,27 @@ Server.use(
 
 // ===================== MANEJO DE RUTAS ====================== //
 
-Server.use(ApiRouter(Router));
+// Router para indicar que ruta se esta solicitandp
+Server.all("*", (request, response, next) => {
+    const { path = "/" } = request;
+    Helpers.messages(`Solicitando ${path}`, "i");
+    next();
+});
+
+// Router correspondiente las acciones del api
+Server.use(ApiRouter(Router, Helpers));
+
+// Router por defecto.
+Server.use("/", (request, response) => {
+    const { path = "" } = request;
+    if (path === "/") {
+        Helpers.messages("Solicitud recibida", "s");
+        response.status(200);
+        response.send("<h1>API</h1>");
+    } else {
+        Helpers.error(response, `Ruta no encontrada ${path}`, "Not found");
+    }
+});
 
 // ====================== ESTABLECIENDO CONEXIÓN ====================== //
 
@@ -63,7 +84,7 @@ Mongoose.connect(process.env.ODBC, process.env.CONFIG, (mongoError) => {
      *
      * return void.
      */
-    Server.listen(APP_PORT, (error) => {
+    Server.listen(PORT, (error) => {
         Helpers.messages("Iniciando el Servidor", "i");
         Helpers.messages("🛰  Conexión establecida con MongoDB Altas", "s");
         if (error) {
@@ -71,7 +92,7 @@ Mongoose.connect(process.env.ODBC, process.env.CONFIG, (mongoError) => {
                 console.log(error); // eslint-disable-line
             process.exit(1);
         } else {
-            Helpers.messages(`🚀 Servidor listo  en el puerto ${APP_PORT}`, "s");
+            Helpers.messages(`🚀 Servidor listo  en el puerto ${PORT}`, "s");
         }
     });
 });

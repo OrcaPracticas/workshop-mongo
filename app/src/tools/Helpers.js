@@ -6,6 +6,47 @@ class Helper {
     static #instanceClass = null;
 
     /**
+     * Permite conseguir los parametros que son enviados a las consultas.
+     *
+     * @param {Express} request Objeto referen te a expess.
+     *
+     * @returns {void}.
+     */
+    prepareSetting(request) {
+        const { body = {}, params } = request;
+        const { field = "" } = params;
+        params.field = (/_?id/.test(field)) ? "_id" : field;
+        if (params.Model === "pokemon") {
+            const { name = "default" } = body;
+            const IMG = this.formatString(name);
+            body.img = `${process.env.HOST}/pokemons/${IMG}.jpg`;
+        }
+        const setting = { body, Model: params.Model };
+        delete params.Model;
+        return { setting, ...params };
+    }
+
+    /**
+     * Permite manejar el error 404
+     *
+     * @param {express} response Objeto de express
+     * @param {string} message Mensaje a mostrar
+     * @param {any} error error que surge al mandar la data.
+     *
+     * @return {void}
+     */
+    error(response, message, error = "") {
+        const DATA = {
+            error,
+            success: false,
+            message,
+        };
+        this.messages(message, "e");
+        response.status(404);
+        response.json(DATA);
+    }
+
+    /**
      * Permite limpiar y formatear una cadena
      *
      * @param {string} string Cadena a limpiar.
@@ -34,8 +75,8 @@ class Helper {
             char = typeof SPECIAL[char] !== "undefined" ? SPECIAL[char] : char;
             if (typeof char !== "function") {
                 ascii = char.charCodeAt();
-                newString +=
-                    ascii === 32 || (ascii >= 48 && ascii <= 57) || (ascii >= 97 && ascii <= 122)
+                newString
+                    += ascii === 32 || (ascii >= 48 && ascii <= 57) || (ascii >= 97 && ascii <= 122)
                         ? char
                         : "";
             }
@@ -80,26 +121,26 @@ class Helper {
         let auxText = typeof text === "object" ? JSON.stringify(text) : text;
         const lon = auxText.length < 90 ? 100 - auxText.length : 0;
         switch (type) {
-            case "e":
-                log = Colors.xterm(15).bgXterm(124).bold;
-                msg = " 🚨  ERROR    ";
-                break;
-            case "s":
-                log = Colors.xterm(15).bgXterm(34).bold;
-                msg = " 🙌  SUCCESS  ";
-                break;
-            case "w":
-                log = Colors.xterm(232).bgXterm(214).bold;
-                msg = " ⚠️  WARNING  ";
-                break;
-            case "t":
-                log = Colors.xterm(15).bgXterm(90).bold;
-                msg = " 🔎  TRACKING ";
-                break;
-            default:
-                log = Colors.xterm(15).bgXterm(12).bold;
-                msg = " ℹ️  INFO     ";
-                break;
+        case "e":
+            log = Colors.xterm(15).bgXterm(124).bold;
+            msg = " 🚨  ERROR    ";
+            break;
+        case "s":
+            log = Colors.xterm(15).bgXterm(34).bold;
+            msg = " 🙌  SUCCESS  ";
+            break;
+        case "w":
+            log = Colors.xterm(232).bgXterm(214).bold;
+            msg = " ⚠️  WARNING  ";
+            break;
+        case "t":
+            log = Colors.xterm(15).bgXterm(90).bold;
+            msg = " 🔎  TRACKING ";
+            break;
+        default:
+            log = Colors.xterm(15).bgXterm(12).bold;
+            msg = " ℹ️  INFO     ";
+            break;
         }
         for (let i = 0; i < lon; i += 1) {
             auxText += " ";
