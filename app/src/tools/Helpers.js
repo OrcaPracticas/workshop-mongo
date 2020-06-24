@@ -16,7 +16,7 @@ class Helper {
         const { body = {}, params } = request;
         const { field = "" } = params;
         params.field = (/_?id/.test(field)) ? "_id" : field;
-        if (params.Model === "pokemon") {
+        if (params.Model === "pokemon" && !body.img) {
             const { name = "default" } = body;
             const IMG = this.formatString(name);
             body.img = `${process.env.HOST}/pokemons/${IMG}.jpg`;
