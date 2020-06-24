@@ -11,7 +11,7 @@ import ApiRouter from "./router";
 
 // ======================== CONSTANTES ======================== //
 
-const APP_PORT = process.env.PORT || 3000;
+const PORT = process.env.APP_PORT;
 const ROOT_PATH = Path.join(__dirname, "../../");
 const Helpers = Tools.instance;
 const Server = Express();
@@ -84,7 +84,7 @@ Mongoose.connect(process.env.ODBC, process.env.CONFIG, (mongoError) => {
      *
      * return void.
      */
-    Server.listen(APP_PORT, (error) => {
+    Server.listen(PORT, (error) => {
         Helpers.messages("Iniciando el Servidor", "i");
         Helpers.messages("🛰  Conexión establecida con MongoDB Altas", "s");
         if (error) {
@@ -92,7 +92,7 @@ Mongoose.connect(process.env.ODBC, process.env.CONFIG, (mongoError) => {
                 console.log(error); // eslint-disable-line
             process.exit(1);
         } else {
-            Helpers.messages(`🚀 Servidor listo  en el puerto ${APP_PORT}`, "s");
+            Helpers.messages(`🚀 Servidor listo  en el puerto ${PORT}`, "s");
         }
     });
 });

@@ -2,11 +2,9 @@
     "name": "workshop-mongo",
     "version": "1.0.0",
     "description": "Taller del uso de mongo desde nodeJS",
-    "main": "./dist/src/server/index.js",
+    "main": "./run_app.js",
     "scripts": {
-        "dev": "nodemon ./run_app.js",
-        "build": "babel ./app/ -d ./dist/",
-        "start": "npm run build; node ./"
+        "dev": "nodemon ./run_app.js"
     },
     "repository": {
         "type": "git",
