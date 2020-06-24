@@ -51,7 +51,7 @@ Server.all("*", (request, response, next) => {
 });
 
 // Router correspondiente las acciones del api
-Server.use(ApiRouter(Router));
+Server.use(ApiRouter(Router, Helpers));
 
 // Router por defecto.
 Server.use("/", (request, response) => {
@@ -70,6 +70,7 @@ Server.use("/", (request, response) => {
 /**
  * Conexión a MongoDB Atlas.
  */
+console.log(process.env.ODBC);
 Mongoose.connect(process.env.ODBC, process.env.CONFIG, (mongoError) => {
     if (mongoError) {
         Helpers.messages("Problemas de conexión a MongoDB Atlas", "e");
