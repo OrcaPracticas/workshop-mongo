@@ -12,10 +12,11 @@ class General {
      */
     constructor() {
         this.#config = {
-            helpers: Helpers.instance,
-            body: null,
             data: { _id: null },
+            body: null,
+            helpers: Helpers.instance,
             response: null,
+            query: {},
         };
     }
 
@@ -31,7 +32,7 @@ class General {
         if (IS_LOAD) {
             const { body, Model } = this.#config;
             const CREATE = new Model(body);
-            CREATE.save((error, data) => {
+            await CREATE.save((error, data) => {
                 this.#send(error, data, 201, "create");
             });
         }
@@ -47,8 +48,8 @@ class General {
     async read(setting) {
         const IS_LOAD = await this.#load(setting);
         if (IS_LOAD) {
-            const { body, Model } = this.#config;
-            Model.find(body, (error, data) => {
+            const { query, Model } = this.#config;
+            await Model.find(query, (error, data) => {
                 this.#send(error, data, 200, "read");
             });
         }
@@ -65,8 +66,8 @@ class General {
         const IS_LOAD = await this.#load(setting);
         if (IS_LOAD) {
             const { body, query, Model } = this.#config;
-            Model.updateMany(query, body, (error, data) => {
-                this.#send(error, data, 202, "UPDATE");
+            await Model.updateOne(query, body, (error, data) => {
+                this.#send(error, data, 202, "update");
             });
         }
     }
@@ -82,8 +83,25 @@ class General {
         const IS_LOAD = await this.#load(setting);
         if (IS_LOAD) {
             const { body, Model } = this.#config;
-            Model.deleteMany(body, (error, data) => {
-                this.#send(error, data, 204, "delete");
+            await Model.deleteOne(body, (error, data) => {
+                this.#send(error, data, 202, "delete");
+            });
+        }
+    }
+
+    async random(setting) {
+        const IS_LOAD = await this.#load(setting);
+        if (IS_LOAD) {
+            const { Model, helpers } = this.#config;
+            await Model.find({}, { _id: true }, (error, data) => {
+                if (error) {
+                    helpers.error(response, `Problemas consiguiendo los elementos`, error);
+                } else {
+                    const MAX = data.length;
+                    const INDEX = Math.floor(Math.random() * (MAX - 0)) + 0;
+                    setting.query = { _id: data[INDEX] };
+                    this.read(setting);
+                }
             });
         }
     }
@@ -144,12 +162,13 @@ class General {
         const { response, helpers, type } = this.#config;
         helpers.messages(`Procesando petición de ${edge}`, "t");
         if (error) {
-            helpers.error(response, `Surgio un problema en ${type}`, error);
+            helpers.error(response, `Surgio un problema en ${type} en la operacion ${edge}`, error);
         } else {
             helpers.getTimeToLive(response, 108000, `${edge}_${type}`);
             helpers.messages(`Respuesta enviada`, "s");
             response.status(status);
-            response.json(data);
+            const DATA = (data.n >= 0) ? { action: edge, count: data.n } : data;
+            response.json(DATA);
         }
     }
 }

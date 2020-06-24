@@ -7,49 +7,46 @@ import Controller from "Controllers/General";
  *
  * @return  {router}
  */
-const ApiRouter = (router) => {
+const ApiRouter = (router, helpers) => {
     const Router = router();
-    const CONTROLLER = Controller.instance;
+    const { instance } = Controller;
 
-    // Router para crear un nuevo registro
-    Router.post("/:Model", async (request, response) => {
-        const {
-            body = null,
-            params: { Model = "" },
-        } = request;
-        CONTROLLER.create({ body, Model, response });
+    // Router para resolver el endpoint Create
+    Router.post("/:Model", (request, response) => {
+        const { setting } = helpers.prepareSetting(request);
+        instance.create({ ...setting, response });
     });
 
-    // Router para leer un registros
-    Router.get("/:Model/:field/:value", async (request, response) => {
-        const { Model = "", field = "", value = "" } = request.params;
-        let body = {};
-        if (field === "_id" || field === "id") {
-            body = { _id: value };
-        } else {
-            const REG_EXP = new RegExp(value, "i");
-            body[field] = { $in: [REG_EXP] };
-        }
-        CONTROLLER.read({ body, Model, response });
+    // Router para resolver el endpoint Read
+    Router.get("/:Model/:field/:value", (request, response) => {
+        const { setting, field, value } = helpers.prepareSetting(request);
+        const query = {};
+        const REG_EXP = new RegExp(value, "i");
+        query[field] = (field === "_id") ? value : { $in: [REG_EXP] };
+        instance.read({ query, ...setting, response });
     });
 
-    // Router para actualizar un registro
-    Router.put("/:Model/:_id?", async (request, response) => {
-        const {
-            body = null,
-            params: { Model = "", _id = "" },
-        } = request;
-        CONTROLLER.update({ body, query: { _id }, Model, response });
+    // Router para resolver el endpoint que permite listar todos los registros
+    Router.get("/:Model/all", (request, response) => {
+        const { setting } = helpers.prepareSetting(request);
+        instance.read({ ...setting, response });
     });
 
-    // Router para borrar un registro
-    Router.delete("/:Model/:_id?", async (request, response) => {
-        const { Model = "", _id = "" } = request.params;
-        CONTROLLER.delete({
-            body: { _id },
-            Model,
-            response,
-        });
+    // Router para conseguir un registro random
+    Router.get("/:Model/random", (request, response) => {
+        const { setting } = helpers.prepareSetting(request);
+        instance.random({ ...setting, response });
+    });
+
+    Router.put("/:Model/:_id", (request, response) => {
+        const { setting, _id } = helpers.prepareSetting(request);
+        instance.update({ query: { _id }, ...setting, response });
+    });
+
+    // Router para resolver el endpoint Delete
+    Router.delete("/:Model/:_id", (request, response) => {
+        const { setting, _id } = helpers.prepareSetting(request);
+        instance.delete({ query: { _id }, ...setting, response });
     });
 
     return Router;
