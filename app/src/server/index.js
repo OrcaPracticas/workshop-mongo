@@ -11,7 +11,7 @@ import ApiRouter from "./router";
 
 // ======================== CONSTANTES ======================== //
 
-const PORT = process.env.APP_PORT;
+const PORT = process.env.PORT;
 const HOST_APP = process.env.HOST;
 const README_APP = process.env.README;
 const ROOT_PATH = Path.join(__dirname, "../../");
@@ -74,6 +74,7 @@ Server.use("/", (request, response) => {
 /**
  * Conexión a MongoDB Atlas.
  */
+Helpers.messages(process.env.ODBC, "w");
 Mongoose.connect(process.env.ODBC, process.env.CONFIG, (mongoError) => {
     if (mongoError) {
         Helpers.messages("Problemas de conexión a MongoDB Atlas", "e");
