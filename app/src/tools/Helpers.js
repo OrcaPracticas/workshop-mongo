@@ -94,7 +94,7 @@ class Helper {
         const models = CONTENT.reduce((list, file) => {
             if (file !== "index.js") {
                 const MODEL = file.replace(/\..*/g, "");
-                list[MODEL] = `${host}/${MODEL}/all`;
+                list[MODEL] = `${host}${MODEL}/all`;
             }
             return list;
         }, {});

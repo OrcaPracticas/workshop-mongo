@@ -1,5 +1,5 @@
 const { USER_DB, PASS, DB, HEROKU } = process.env;
-const HOST = HEROKU || `http://localhost:${APP_PORT}`;
+const HOST = HEROKU || `http://localhost:3000/`;
 
 // variables de entorno
 module.exports = {
