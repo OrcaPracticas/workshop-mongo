@@ -11,7 +11,7 @@ import ApiRouter from "./router";
 
 // ======================== CONSTANTES ======================== //
 
-const PORT = process.env.PORT;
+const APP_PORT = process.env.PORT;
 const HOST_APP = process.env.HOST;
 const README_APP = process.env.README;
 const ROOT_PATH = Path.join(__dirname, "../../");
