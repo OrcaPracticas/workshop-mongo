@@ -1,4 +1,6 @@
 language: node_js
+services:
+  - mongodb
 cache:
 - app/build
 node_js:
