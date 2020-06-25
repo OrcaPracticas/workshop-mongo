@@ -1,30 +1,10 @@
 import Colors from "cli-color";
+import { readdirSync } from "fs";
 
 /* eslint-disable class-methods-use-this */
 class Helper {
     // Propiedad privada
     static #instanceClass = null;
-
-    /**
-     * Permite conseguir los parametros que son enviados a las consultas.
-     *
-     * @param {Express} request Objeto referen te a expess.
-     *
-     * @returns {void}.
-     */
-    prepareSetting(request) {
-        const { body = {}, params } = request;
-        const { field = "" } = params;
-        params.field = (/_?id/.test(field)) ? "_id" : field;
-        if (params.Model === "pokemon" && !body.img) {
-            const { name = "default" } = body;
-            const IMG = this.formatString(name);
-            body.img = `${process.env.HOST}/pokemons/${IMG}.jpg`;
-        }
-        const setting = { body, Model: params.Model };
-        delete params.Model;
-        return { setting, ...params };
-    }
 
     /**
      * Permite manejar el error 404
@@ -102,6 +82,26 @@ class Helper {
     }
 
     /**
+     * Permite listar los modelos referentes a las colecciones disponibles.
+     *
+     * @param {String} path Ruta de donde se pueden cargar los modelos.
+     * @param {String} host Url del host donde se esta probando.
+     *
+     * @return {Object}.
+     */
+    listModels(path, host, readme) {
+        const CONTENT = readdirSync(path);
+        const models = CONTENT.reduce((list, file) => {
+            if (file !== "index.js") {
+                const MODEL = file.replace(/\..*/g, "");
+                list[MODEL] = `${host}/${MODEL}/all`;
+            }
+            return list;
+        }, {});
+        return { readme, models };
+    }
+
+    /**
      * Permite el envio de mensajes
      *
      * @param  String text Mensaje que se desea mostrar.
@@ -146,6 +146,27 @@ class Helper {
             auxText += " ";
         }
         console.log(log(` [${msg}] => ${auxText}`)); // eslint-disable-line
+    }
+
+    /**
+     * Permite conseguir los parametros que son enviados a las consultas.
+     *
+     * @param {Express} request Objeto referen te a expess.
+     *
+     * @returns {void}.
+     */
+    prepareSetting(request) {
+        const { body = {}, params } = request;
+        const { field = "" } = params;
+        params.field = (/_?id/.test(field)) ? "_id" : field;
+        if (params.Model === "pokemon" && !body.img) {
+            const { name = "default" } = body;
+            const IMG = this.formatString(name);
+            body.img = `${process.env.HOST}/pokemons/${IMG}.jpg`;
+        }
+        const setting = { body, Model: params.Model };
+        delete params.Model;
+        return { setting, ...params };
     }
 
     /**

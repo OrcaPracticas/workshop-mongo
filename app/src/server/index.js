@@ -12,7 +12,10 @@ import ApiRouter from "./router";
 // ======================== CONSTANTES ======================== //
 
 const PORT = process.env.APP_PORT;
+const HOST_APP = process.env.HOST;
+const README_APP = process.env.README;
 const ROOT_PATH = Path.join(__dirname, "../../");
+const PATH = `${ROOT_PATH}src/models`;
 const Helpers = Tools.instance;
 const Server = Express();
 
@@ -57,9 +60,10 @@ Server.use(ApiRouter(Router, Helpers));
 Server.use("/", (request, response) => {
     const { path = "" } = request;
     if (path === "/") {
+        const LIST_MODELS = Helpers.listModels(PATH, HOST_APP, README_APP);
         Helpers.messages("Solicitud recibida", "s");
         response.status(200);
-        response.send("<h1>API</h1>");
+        response.json(LIST_MODELS);
     } else {
         Helpers.error(response, `Ruta no encontrada ${path}`, "Not found");
     }
