@@ -1,7 +1,6 @@
 # workshop-mongo
-![](https://www.codewars.com/users/konami12/badges/micro)
 
-[![GitHub version](https://badge.fury.io/gh/OrcaPracticas%2Fworkshop-mongo.svg?style=flat-square&logo=appveyor)](https://badge.fury.io/gh/OrcaPracticas%2Fworkshop-mongo) [![HEROKU](https://img.shields.io/badge/liveSite-heroku-79589f.svg?style=flat&logo=appveyor)](https://workshop-mongo.herokuapp.com/) [![MONGODB_ATLAS](https://img.shields.io/badge/mongoDB-Altas-13aa52.svg?style=flat&logo=appveyor)](https://www.mongodb.com/)
+![CodeWars](https://www.codewars.com/users/konami12/badges/micro) [![GitHub version](https://badge.fury.io/gh/OrcaPracticas%2Fworkshop-mongo.svg?style=flat-square&logo=appveyor)](https://badge.fury.io/gh/OrcaPracticas%2Fworkshop-mongo) [![HEROKU](https://img.shields.io/badge/liveSite-heroku-79589f.svg?style=flat&logo=appveyor)](https://workshop-mongo.herokuapp.com/) [![MONGODB_ATLAS](https://img.shields.io/badge/mongoDB-Altas-13aa52.svg?style=flat&logo=appveyor)](https://www.mongodb.com/)
 
 
 # 💻 WorkShop Mongo
@@ -186,7 +185,7 @@ Es importante mencionar que el proyecto cuenta con `tag's` que facilita el movim
 - **[⚙️ Configuraciones iniciales](https://github.com/OrcaPracticas/workshop-mongo/releases/tag/Configuracion)**
 - **[📦 Instalación de dependencias](https://github.com/OrcaPracticas/workshop-mongo/releases/tag/Instalaci%C3%B3n)**
 - **[🛠 Armado de Tools y Models](https://github.com/OrcaPracticas/workshop-mongo/releases/tag/ToolsyModels)**
-- **[📡 Conexión con MongoDB Atlas](hhttps://github.com/OrcaPracticas/workshop-mongo/releases/tag/Conexion)**
+- **[📡 Conexión con MongoDB Atlas](https://github.com/OrcaPracticas/workshop-mongo/releases/tag/Conexion)**
 - **[👨🏻‍💻 Integración de Crud](https://github.com/OrcaPracticas/workshop-mongo/releases/tag/Crud)**
 - **[⚙️Configuración Heroku](https://github.com/OrcaPracticas/workshop-mongo/releases/tag/Heroku)**
 
