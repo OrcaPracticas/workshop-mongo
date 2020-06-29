@@ -52,7 +52,7 @@ Al estar dentro del directorio es necesario crear las siguientes variables de en
 
 - Cunado se esta utilizando MacOs o Linux basta con los siguientes comandos.
 
-![Fig1: Variables de entorno](./documents/varibles.png)
+![Fig1: Variables de entorno](./documents/variables.png)
 
 - Cuando se esta utilizando Windows puedes consultar el siguiente link
 [Como crear variables de entorno en windows](https://www.genbeta.com/desarrollo/variables-entorno-que-sirven-como-podemos-editarlas-windows-linux)
